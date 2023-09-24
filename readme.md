@@ -7,7 +7,7 @@
     - [Prerequisites](#prerequisites)
     - [Configuration](#configuration)
 3. [Usage](#usage)
-3. [Context Propagation](#Context Propagation within Your Distributed System using KTracer)
+3. [Context Propagation](#Context)
 
 ## Introduction
 
