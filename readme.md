@@ -21,19 +21,19 @@ You need to have Zipkin installed in your environment, which you can do by follo
 
 ### Configuration
 
-Follow the steps below to configure KTracer in your project:
+Follow the steps below to configure ka-tracer in your project:
 
 1. Clone the repository using the command below:
 ```shell
 git clone <repository_url>
 ```
-Replace <repository_url> with the URL of the KTracer repository.
+Replace <repository_url> with the URL of the ka-tracer repository.
 2. Then Navigate through the directory:
 ```shell
 cd  <project_directory>
 ```
-Replace <project_directory> with the path to the cloned KTracer repository.
-3. Install the KTracer with Maven:
+Replace <project_directory> with the path to the cloned ka-tracer repository.
+3. Install the ka-tracer with Maven:
 ```shell
 mvn clean install  
 ```
@@ -41,15 +41,15 @@ mvn clean install
 ```xml
 <dependency>
     <groupId>com.tracer</groupId>
-	<artifactId>ktracer</artifactId>
+	<artifactId>ka-tracer</artifactId>
 	<version>1.0.0</version>
 </dependency>
 ```
-5. In your Spring Boot main class, add the following annotation to enable component scanning for KTracer packages:
+5. In your Spring Boot main class, add the following annotation to enable component scanning for ka-tracer packages:
 ```java
 @SpringBootApplication(scanBasePackages = {"com.tracer.*"})
 ```
-This ensures that KTracer components are recognized and used in your application.
+This ensures that ka-tracer components are recognized and used in your application.
 6. Add the following properties to your configuration file (e.g., application.properties or application.yml) and customize them accordingly:
 
 For application.properties:
@@ -70,9 +70,9 @@ zipkin:
 
 ## Usage
 
-Here are the usage instructions for integrating KTracer into your Spring Boot application:
+Here are the usage instructions for integrating ka-tracer into your Spring Boot application:
 
-To leverage KTracer in your Spring Boot application, follow these steps:
+To leverage ka-tracer in your Spring Boot application, follow these steps:
 
 1. Create an HTTP Inbound Gateway:
 
@@ -86,7 +86,7 @@ Create an HTTP Inbound Gateway in your Spring Boot application. This gateway wil
 ```
 2. Create an Interceptor and Use TracingInterceptor:
 
-Create an interceptor that will intercept incoming HTTP requests. You can use KTracer's TracingInterceptor to automatically instrument your application for tracing.
+Create an interceptor that will intercept incoming HTTP requests. You can use ka-tracer's TracingInterceptor to automatically instrument your application for tracing.
 
 ```xml
 <int:channel id="your-preferred-channel">
@@ -96,15 +96,15 @@ Create an interceptor that will intercept incoming HTTP requests. You can use KT
 </int:channel>
 ``` 
 
-With these steps completed, KTracer will automatically intercept incoming HTTP requests to your Spring Boot application and instrument them for tracing. This instrumentation will help you monitor and trace the flow of requests through your application for performance analysis and debugging.
+With these steps completed, ka-tracer will automatically intercept incoming HTTP requests to your Spring Boot application and instrument them for tracing. This instrumentation will help you monitor and trace the flow of requests through your application for performance analysis and debugging.
 
-## Context Propagation within Your Distributed System using KTracer
+## Context Propagation within Your Distributed System using ka-tracer
 
-To facilitate context propagation within your distributed system when using KTracer, follow these steps:
+To facilitate context propagation within your distributed system when using ka-tracer, follow these steps:
 
-1. Add KTracer Interceptor:
+1. Add ka-tracer Interceptor:
 
-Ensure that you have added the KTracer interceptor to your Spring Boot application, as mentioned earlier. This interceptor will handle tracing and span management.
+Ensure that you have added the ka-tracer interceptor to your Spring Boot application, as mentioned earlier. This interceptor will handle tracing and span management.
 
 2. Access Current Span:
 
@@ -160,4 +160,4 @@ ResponseEntity<String> response = restTemplate.exchange(
 ```
 5. Automatic Child Span Generation:
 
-If the other services within your distributed system also use KTracer and are configured properly, KTracer will automatically identify the parent request based on the headers (x-trace-id, x-span-id, x-trace-flags) you added to your request. KTracer will generate a child span for that request, allowing you to trace the entire flow across services.
+If the other services within your distributed system also use ka-tracer and are configured properly, ka-tracer will automatically identify the parent request based on the headers (x-trace-id, x-span-id, x-trace-flags) you added to your request. ka-tracer will generate a child span for that request, allowing you to trace the entire flow across services.

@@ -45,7 +45,7 @@ public class TracingInterceptor implements ChannelInterceptor {
         Optional<String> traceId = Optional.ofNullable((String) headers.get("x-trace-id"));
         Optional<String> spanId = Optional.ofNullable((String) headers.get("x-span-id"));
         Optional<String> traceFlags = Optional.ofNullable((String) headers.get("x-trace-flags"));
-        Optional<SpanContext> spanContext = traceId.isPresent() && spanId.isPresent()
+        Optional<SpanContext> spanContext = traceId.isPresent() && spanId.isPresent() && traceFlags.isPresent()
                 ? Optional.of(SpanContext.createFromRemoteParent(
                         traceId.get(),
                         spanId.get(),
@@ -53,12 +53,20 @@ public class TracingInterceptor implements ChannelInterceptor {
                         TraceState.getDefault()))
                 : Optional.empty();
 
-        Span span;
+        Span span = SpanHolder.getSpan();
         if (spanContext.isPresent()) {
             span = this.tracer
                     .spanBuilder(httpRequestUrl)
                     .setParent(Context.current()
                             .with(Span.wrap(spanContext.get())))
+                    .setAttribute("http.url", httpRequestUrl)
+                    .setAttribute("http.method", httpRequestMethod)
+                    .startSpan();
+        } else if (span != null) {
+            span = this.tracer
+                    .spanBuilder(httpRequestUrl)
+                    .setParent(Context.current()
+                            .with(Span.wrap(span.getSpanContext())))
                     .setAttribute("http.url", httpRequestUrl)
                     .setAttribute("http.method", httpRequestMethod)
                     .startSpan();
