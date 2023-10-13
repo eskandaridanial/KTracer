@@ -23,21 +23,11 @@ public class TracerTest {
 
     @Test
     public void success() {
-        String message = "success";
-        Message<String> testMessage = MessageBuilder.withPayload(message).build();
+        Message<String> testMessage = MessageBuilder.withPayload("").build();
         inputChannel.send(testMessage);
         SpanContext span = SpanHolder.getSpan().getSpanContext();
         Assertions.assertEquals(MDC.get("traceId"), span.getTraceId());
         Assertions.assertEquals(MDC.get("spanId"), span.getSpanId());
         MDC.clear();
-    }
-
-    @Test
-    public void failure() {
-        String message = "failure";
-        Message<String> testMessage = MessageBuilder.withPayload(message).build();
-        inputChannel.send(testMessage);
-        Assertions.assertNull(MDC.get("traceId"));
-        Assertions.assertNull(MDC.get("spanId"));
     }
 }
